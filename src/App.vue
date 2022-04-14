@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import TheCurtain from "@/components/TheCurtain/index.vue";
+// import TheCurtain from "@/components/TheCurtain/index.vue";
+import VInput from "@/components/VInput/index.vue";
 </script>
 
 <template>
-    <TheCurtain />
+    <!-- <TheCurtain /> -->
     <h1 class="title">
         hello world
     </h1>
+    <VInput
+        label="Lorem"
+        placeholder="Write something stupid"
+    />
 </template>
 
 <style lang="scss">
