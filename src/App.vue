@@ -8,14 +8,32 @@ import VInput from "@/components/VInput/index.vue";
     <h1 class="title">
         hello world
     </h1>
-    <VInput
-        label="Lorem"
-        placeholder="Write something stupid"
-    />
+    <div class="form">
+        <VInput
+            label="Lorem"
+            placeholder="Write something stupid"
+            error="it's error"
+        />
+
+        <VInput
+            label="Lorem"
+            placeholder="Write something stupid"
+        />
+    </div>
 </template>
 
 <style lang="scss">
 @import "@/styles/base";
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px auto;
+    height: 200px;
+    max-width: 400px;
+    padding: 0 8px;
+}
+
 .title {
     color: white;
 }

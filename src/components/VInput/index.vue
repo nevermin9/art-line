@@ -7,27 +7,52 @@ defineProps({
     placeholder: {
         type: String,
         required: true,
+    },
+    error: {
+        type: String,
+        default: "",
+    },
+    type: {
+        type: String,
+        required: true,
     }
-})
+});
+
+const id = Date.now().toString();
 
 </script>
 
 <template>
     <div class="v-input">
-        <div class="v-input__inner-box">
+        <div class="v-input__input-box">
             <input
-                class="v-input__input"
+                :class="{
+                    'v-input__input': true,
+                    'v-input__input--error': error.length > 0,
+                }"
                 :placeholder="placeholder"
-                type="text"
-                name="text"
-                id="lorem"
+                :type="type"
+                :id="id"
             >
+
             <label
-                class="v-input__label"
-                for="lorem"
+                :class="{
+                    'v-input__label': true,
+                    'v-input__label--error': error.length > 0,
+                }"
+                :for="id"
             >
                 {{ label }}
             </label>
+        </div>
+
+        <div class="v-input__error-box">
+            <span
+                v-if="error.length > 0"
+                class="v-input__error-text"
+            >
+                {{ error }}
+            </span>
         </div>
     </div>
 </template>
@@ -36,57 +61,86 @@ defineProps({
 .v-input {
     $root: &;
 
-    &__inner-box {
+    &__input-box {
         display: flex;
         flex-direction: column-reverse;
     }
 
     &__input {
-        padding: 8px;
+        padding: 12px 16px;
         background: transparent;
         outline: none;
         border: none;
+        border-radius: 2px;
         border: 1px solid $input-border;
-        // border-bottom: 1px solid $input-border;
+        color: $font-general;
 
         &:placeholder-shown + #{ $root }__label {
-            // transform: translateY(17px);
-            transform: translateY(25px);
+            transform: translate(8px, 31px);
         }
 
         &::placeholder,
         &::-webkit-input-placeholder {
             opacity: 0;
             transition: inherit;
+            color: $input-border;
         }
 
         &:focus {
-            border-bottom: 1px solid $input-border--focus;
+            border: 1px solid $input-border--focus;
 
             &::placeholder,
             &::-webkit-input-placeholder {
                 opacity: 1;
             }
 
-            & + #{ $root }__label,
-            &:not(:placeholder-shown) + #{ $root }__label {
-                // transform: translateY(0);
-                transform: translateY(9px);
+            & + #{ $root }__label {
+                transform: translate(8px, 9px);
+                color: $font-general;
             }
         }
 
+        &:not(:placeholder-shown) + #{ $root }__label {
+            transform: translate(8px, 9px);
+        }
+
+        // error styles
+        &#{ $root }__input--error {
+            border: 1px solid $error-color;
+
+            &:focus + #{ $root }__label {
+                color: $error-color;
+            }
+        }
     }
 
     &__label {
         display: inline-block;
+        width: min-content;
+        padding: 0 8px;
         background-color: #1a1a1a;
         color: $font-passive;
+
+        // error styles
+        &#{ $root }__label--error {
+            color: $error-color;
+        }
     }
 
     &__label,
     &__input {
         transition: all .3s;
         touch-action: manipulation;
+    }
+
+    &__error-box {
+        padding: 0 4px;
+        height: 18.5px;
+    }
+
+    &__error-text {
+        font-size: 14px;
+        color: $error-color;
     }
 }
 </style>
