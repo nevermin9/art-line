@@ -1,5 +1,13 @@
 <script setup lang="ts">
-defineProps({
+import { computed } from "vue"
+
+const id = Date.now().toString();
+
+const props = defineProps({
+    modelValue: {
+        type: [String, Number],
+        required: true,
+    },
     label: {
         type: String,
         required: true,
@@ -15,10 +23,20 @@ defineProps({
     type: {
         type: String,
         required: true,
-    }
+    },
 });
 
-const id = Date.now().toString();
+const emit = defineEmits(["update:modelValue"]);
+
+const value = computed({
+    get() {
+        return props.modelValue;
+    },
+
+    set(val) {
+        emit("update:modelValue", val);
+    }
+})
 
 </script>
 
@@ -33,6 +51,7 @@ const id = Date.now().toString();
                 :placeholder="placeholder"
                 :type="type"
                 :id="id"
+                v-model="value"
             >
 
             <label
