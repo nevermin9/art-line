@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import TheCurtain from "@/components/TheCurtain/index.vue";
+import TheCurtain from "@/components/TheCurtain/index.vue";
 import VInput from "@/components/VInput/index.vue";
 import VButton from "@/components/VButton/index.vue"
 const print = function(e: MouseEvent) {
@@ -9,7 +9,7 @@ const print = function(e: MouseEvent) {
 </script>
 
 <template>
-    <!-- <TheCurtain /> -->
+    <TheCurtain />
     <h1 class="title">
         hello world
     </h1>
