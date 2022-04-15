@@ -1,6 +1,11 @@
 <script setup lang="ts">
 // import TheCurtain from "@/components/TheCurtain/index.vue";
 import VInput from "@/components/VInput/index.vue";
+import VButton from "@/components/VButton/index.vue"
+const print = function(e: MouseEvent) {
+    console.log("print");
+    console.log(e);
+}
 </script>
 
 <template>
@@ -10,15 +15,20 @@ import VInput from "@/components/VInput/index.vue";
     </h1>
     <div class="form">
         <VInput
-            label="Lorem"
-            placeholder="Write something stupid"
-            error="it's error"
+            label="Login"
+            placeholder="James"
         />
 
         <VInput
-            label="Lorem"
-            placeholder="Write something stupid"
+            label="Password"
+            placeholder="*********"
         />
+
+        <VButton>
+            <template #text>
+                register
+            </template>
+        </VButton>
     </div>
 </template>
 

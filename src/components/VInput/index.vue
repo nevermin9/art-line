@@ -90,7 +90,7 @@ const value = computed({
         background: transparent;
         outline: none;
         border: none;
-        border-radius: 2px;
+        border-radius: $border-radius;
         border: 1px solid $input-border;
         color: $font-general;
 
