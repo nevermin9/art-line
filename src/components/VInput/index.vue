@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-const id = Date.now().toString();
+const id = (Date.now() * Math.random()).toString();
 
 const props = defineProps({
     modelValue: {

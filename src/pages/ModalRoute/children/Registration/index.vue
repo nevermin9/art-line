@@ -2,16 +2,26 @@
 import { ref } from "vue"
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
+import useAuth from "@/composition/auth";
 
 const email = ref("");
 const password = ref("");
 const repeatPassword = ref("");
+const { registerUser } = useAuth();
+
+function onSubmit(e: Event) {
+    console.log("aaaaaa", e)
+    registerUser(email.value, password.value);
+}
 
 </script>
 
 <template>
     <div class="auth-box">
-        <form class="auth-box__form">
+        <form
+            class="auth-box__form"
+            @submit.prevent="onSubmit"
+        >
             <VInput
                 class="auth__input auth__input--email"
                 v-model="email"
