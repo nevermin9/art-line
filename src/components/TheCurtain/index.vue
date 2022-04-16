@@ -37,14 +37,15 @@
 
 <style lang="scss">
 $animation-duration: .6s;
+$overlap-seconds: .4s;
 
 $animation-delay-letter-a: 0s;
-$animation-delay-letter-r: calc($animation-duration + $animation-delay-letter-a);
-$animation-delay-letter-t: calc($animation-duration + $animation-delay-letter-r);
-$animation-delay-letter-l: calc($animation-duration + $animation-delay-letter-t);
-$animation-delay-letter-i: calc($animation-duration + $animation-delay-letter-l);
-$animation-delay-letter-n: calc($animation-duration + $animation-delay-letter-i);
-$animation-delay-letter-e: calc($animation-duration + $animation-delay-letter-n);
+$animation-delay-letter-r: calc($animation-duration + $animation-delay-letter-a - $overlap-seconds);
+$animation-delay-letter-t: calc($animation-duration + $animation-delay-letter-r - $overlap-seconds);
+$animation-delay-letter-l: calc($animation-duration + $animation-delay-letter-t - $overlap-seconds);
+$animation-delay-letter-i: calc($animation-duration + $animation-delay-letter-l - $overlap-seconds);
+$animation-delay-letter-n: calc($animation-duration + $animation-delay-letter-i - $overlap-seconds);
+$animation-delay-letter-e: calc($animation-duration + $animation-delay-letter-n - $overlap-seconds);
 $animation-delay-curtain: calc($animation-duration + $animation-delay-letter-e);
 
 .curtain {

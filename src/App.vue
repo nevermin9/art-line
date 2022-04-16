@@ -13,22 +13,8 @@ const print = function(e: MouseEvent) {
     <h1 class="title">
         hello world
     </h1>
-    <div class="form">
-        <VInput
-            label="Login"
-            placeholder="James"
-        />
-
-        <VInput
-            label="Password"
-            placeholder="*********"
-        />
-
-        <VButton>
-            <template #text>
-                register
-            </template>
-        </VButton>
+    <div>
+        <router-view></router-view>
     </div>
 </template>
 
