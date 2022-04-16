@@ -6,24 +6,28 @@ const routes: RouteRecordRaw[] = [
         path: "/",
         name: routesNames.home,
         component: () => import("@/pages/Home/index.vue"),
-        children: [
-            {
-                path: "",
-                name: "Login",
-                component: () => import("@/pages/Home/children/Login/index.vue"),
-            },
-            {
-                path: "registration",
-                name: routesNames.registration,
-                component: () => import("@/pages/Home/children/Registration/index.vue"),
-            }
-        ]
+    },
+    {
+        path: "/login",
+        name: routesNames.login,
+        component: () => import("@/pages/ModalRoute/index.vue"),
+        props: {
+            componentName: routesNames.login,
+        },
+    },
+    {
+        path: "/registration",
+        name: routesNames.registration,
+        component: () => import("@/pages/ModalRoute/index.vue"),
+        props: {
+            componentName: routesNames.registration,
+        },
     },
     {
         path: "/gallery",
         name: routesNames.gallery,
         component: () => import("@/pages/Gallery/index.vue"),
-    }
+    },
 ];
 
 const router = createRouter({
