@@ -139,6 +139,7 @@ const value = computed({
         padding: 0 8px;
         background-color: #1a1a1a;
         color: $font-passive;
+        white-space: nowrap;
 
         // error styles
         &#{ $root }__label--error {
