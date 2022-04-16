@@ -48,10 +48,10 @@ const value = computed({
                     'v-input__input': true,
                     'v-input__input--error': error.length > 0,
                 }"
+                v-model="value"
                 :placeholder="placeholder"
                 :type="type"
                 :id="id"
-                v-model="value"
             >
 
             <label

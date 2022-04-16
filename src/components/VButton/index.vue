@@ -22,6 +22,9 @@ defineProps({
         type: String as PropType<"button" | "submit" | "reset">,
         default: "button"
     },
+    // path: {
+    //     type: 
+    // }
 });
 
 </script>
