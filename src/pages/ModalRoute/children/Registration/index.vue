@@ -18,12 +18,16 @@ function onSubmit(e: Event) {
 
 <template>
     <div class="auth-box">
+        <h2 class="auth-box__headline">
+            Registration
+        </h2>
+
         <form
             class="auth-box__form"
             @submit.prevent="onSubmit"
         >
             <VInput
-                class="auth__input auth__input--email"
+                class="auth-box__input auth-box__input--email"
                 v-model="email"
                 label="Email"
                 placeholder="your_email@emailbox.com"
@@ -31,7 +35,7 @@ function onSubmit(e: Event) {
             />
 
             <VInput
-                class="auth__input auth__input--password"
+                class="auth-box__input auth-box__input--password"
                 v-model="password"
                 label="Password"
                 placeholder="*********"
@@ -39,7 +43,7 @@ function onSubmit(e: Event) {
             />
 
             <VInput
-                class="auth__input auth__input--repeat-password"
+                class="auth-box__input auth-box__input--last-input"
                 v-model="repeatPassword"
                 label="Repeat password"
                 placeholder="*********"
@@ -47,7 +51,7 @@ function onSubmit(e: Event) {
             />
 
             <VButton
-                class="auth__btn"
+                class="auth-box__btn"
                 type="submit"
             >
                 <template #text>
@@ -57,7 +61,7 @@ function onSubmit(e: Event) {
 
 <!-- should be link -->
             <VButton
-                class="auth__btn"
+                class="auth-box__btn"
                 design="second"
                 type="button"
             >
@@ -70,6 +74,29 @@ function onSubmit(e: Event) {
 </template>
 
 <style lang="scss">
+.auth-box {
+    $root: &;
+
+    padding: 42px 20px 32px;
+
+    &__headline {
+        margin-bottom: 16px;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    &__input {
+        margin-bottom: 8px;
+
+        &#{ $root }__input--last-input {
+            margin-bottom: 16px;
+        }
+    }
+
+    &__btn:not(:last-child) {
+        margin-bottom: 16px;
+    }
+}
 </style>
 
 

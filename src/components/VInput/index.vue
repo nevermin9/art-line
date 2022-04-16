@@ -61,7 +61,9 @@ const value = computed({
                 }"
                 :for="id"
             >
-                {{ label }}
+                <span class="v-input__label-text">
+                    {{ label }}
+                </span>
             </label>
         </div>
 
@@ -95,7 +97,7 @@ const value = computed({
         color: $font-general;
 
         &:placeholder-shown + #{ $root }__label {
-            transform: translate(8px, 31px);
+            transform: translate(8px, 12.5px);
         }
 
         &::placeholder,
@@ -114,13 +116,13 @@ const value = computed({
             }
 
             & + #{ $root }__label {
-                transform: translate(8px, 9px);
+                transform: translate(8px, -10px);
                 color: $font-general;
             }
         }
 
         &:not(:placeholder-shown) + #{ $root }__label {
-            transform: translate(8px, 9px);
+            transform: translate(8px, -10px);
         }
 
         // error styles
@@ -136,14 +138,30 @@ const value = computed({
     &__label {
         display: inline-block;
         width: min-content;
-        padding: 0 8px;
-        background-color: #1a1a1a;
+        height: 0;
         color: $font-passive;
         white-space: nowrap;
 
         // error styles
         &#{ $root }__label--error {
             color: $error-color;
+        }
+    }
+
+    &__label-text {
+        position: relative;
+        display: inline-block;
+        padding: 0 8px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background-color: $second-color;
         }
     }
 

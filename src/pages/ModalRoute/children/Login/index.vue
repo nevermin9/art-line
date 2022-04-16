@@ -10,6 +10,10 @@ const password = ref("");
 
 <template>
     <div class="auth-box">
+        <h2>
+            Login
+
+        </h2>
         <form class="auth-box__form">
             <VInput
                 class="auth__input auth__input--email"
