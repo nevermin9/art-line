@@ -92,7 +92,7 @@ const customAttrs = {
         border: none;
         background-color: transparent;
         border-radius: $border-radius;
-        transition: all .3s;
+        transition: all $animation-duration;
         text-decoration: none;
 
         &#{ $root }__button--first {

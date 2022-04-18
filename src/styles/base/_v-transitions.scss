@@ -1,7 +1,7 @@
 // fade
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity .3s ease;
+    transition: opacity $animation-duration ease;
 }
 
 .fade-enter-from,

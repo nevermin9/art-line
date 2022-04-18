@@ -65,6 +65,13 @@ const Component = defineAsyncComponent(() => {
         max-width: 450px;
         background-color: $second-color;
         border-radius: $border-radius;
+        opacity: 0;
+        transform: translateY(100px);
+
+        animation-name: modal-up;
+        animation-duration: $animation-duration;
+        animation-delay: .1s;
+        animation-fill-mode: forwards;
     }
 
     &__close-box {
@@ -80,7 +87,7 @@ const Component = defineAsyncComponent(() => {
 
     &__close-ico {
         color: $font-passive;
-        transition: all .3s;
+        transition: all $animation-duration;
 
         &:hover,
         &:active {
@@ -90,6 +97,18 @@ const Component = defineAsyncComponent(() => {
         &:active {
             transform: translateY(3px);
         }
+    }
+}
+
+@keyframes modal-up {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 </style>

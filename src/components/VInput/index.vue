@@ -167,7 +167,7 @@ const value = computed({
 
     &__label,
     &__input {
-        transition: all .3s;
+        transition: all $animation-duration;
         touch-action: manipulation;
     }
 

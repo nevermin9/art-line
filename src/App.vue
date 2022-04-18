@@ -10,9 +10,15 @@ import TheCurtain from "@/components/TheCurtain/index.vue";
     <div>
         <router-view />
 
-        <Transition name="fade">
-            <router-view :key="$route.fullPath" name="modal" />
-        </Transition>
+        <router-view
+            :key="$route.fullPath"
+            name="modal"
+            v-slot="{ Component }"
+        >
+            <Transition name="fade">
+                <component :is="Component" />
+            </Transition>
+        </router-view>
     </div>
 </template>
 
