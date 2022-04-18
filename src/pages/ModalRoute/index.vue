@@ -4,6 +4,13 @@ import { Close } from "@vicons/ionicons5"
 import { Icon } from "@vicons/utils"
 import { useRouter, useRoute, RouteLocationRaw } from "vue-router";
 
+const props = defineProps({
+    componentName: {
+        type: String,
+        required: true,
+    },
+});
+
 const router = useRouter();
 const route = useRoute();
 
@@ -12,23 +19,13 @@ function closeModalRoute(e: Event) {
     router.push(lastNotModalRoute as RouteLocationRaw);
 }
 
-const props = defineProps({
-    componentName: {
-        type: String,
-        required: true,
-    },
-});
-
 const Component = defineAsyncComponent(() => {
     return import(`./children/${props.componentName.replace(/\s+/g, '')}/index.vue`)
 });
-
-
-
 </script>
 
 <template>
-    <div class="modal-route">
+    <div class="modal-route" @click.self="closeModalRoute">
         <div class="modal-route__content">
             <div class="modal-route__close-box">
                 <button
