@@ -8,9 +8,10 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { PropType } from "vue"
+import { computed, PropType } from "vue"
+import { RouteLocationRaw } from "vue-router"
 
-defineProps({
+const props = defineProps({
     design: {
         type: String as PropType<ButtonDesign>,
         default: vButtonDesigns[0],
@@ -18,14 +19,28 @@ defineProps({
             return vButtonDesigns.indexOf(value) !== -1;
         }
     },
-    type: {
+    btnType: {
         type: String as PropType<"button" | "submit" | "reset">,
         default: "button"
     },
-    // path: {
-    //     type: 
-    // }
+    path: {
+        type: [String, Object] as PropType<RouteLocationRaw>,
+        default: null,
+    }
 });
+
+const componentType = computed(() => {
+    return props.path ? "router-link" : "button";
+});
+
+const customAttrs = {
+    class: {
+        'v-button__button': true,
+        [`v-button__button--${props.design}`]: Boolean(props.design),
+    },
+    [props.path ? "" : "type"]: props.btnType,
+    [props.path ? "to" : ""]: props.path,
+}
 
 </script>
 
@@ -34,20 +49,33 @@ defineProps({
         class="v-button"
         v-bind="$attrs"
     >
-        <button
+        <!-- <component
+            :is="componentType"
             :class="{
                 'v-button__button': true,
                 [`v-button__button--${design}`]: Boolean(design),
             }"
             :type="type"
-            @click="$attrs.onClick!"
+            @click="$attrs.onClick"
+            :to=""
         >
             <span
                 class="v-button__text"
             >
                 <slot name="text"></slot>
             </span>
-        </button>
+        </component> -->
+        <component
+            :is="componentType"
+            v-bind="customAttrs"
+            @click="$attrs.onClick"
+        >
+            <span
+                class="v-button__text"
+            >
+                <slot name="text"></slot>
+            </span>
+        </component>
     </div>
 </template>
 
@@ -60,11 +88,12 @@ defineProps({
         width: 100%;
         text-align: center;
         text-transform: uppercase;
-        padding: 12px 20px;
+        padding: 16px 20px;
         border: none;
         background-color: transparent;
         border-radius: $border-radius;
         transition: all .3s;
+        text-decoration: none;
 
         &#{ $root }__button--first {
             background-color: $third-color;

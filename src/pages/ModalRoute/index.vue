@@ -2,6 +2,15 @@
 import { defineAsyncComponent } from "vue"
 import { Close } from "@vicons/ionicons5"
 import { Icon } from "@vicons/utils"
+import { useRouter, useRoute, RouteLocationRaw } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
+
+function closeModalRoute(e: Event) {
+    const { lastNotModalRoute } = route.meta;
+    router.push(lastNotModalRoute as RouteLocationRaw);
+}
 
 const props = defineProps({
     componentName: {
@@ -11,27 +20,33 @@ const props = defineProps({
 });
 
 const Component = defineAsyncComponent(() => {
-    return import(`./children/${props.componentName}/index.vue`)
+    return import(`./children/${props.componentName.replace(/\s+/g, '')}/index.vue`)
 });
+
+
 
 </script>
 
 <template>
-    <Teleport to="body">
-        <div class="modal-route">
-            <div class="modal-route__content">
-                <div class="modal-route__close-box">
+    <div class="modal-route">
+        <div class="modal-route__content">
+            <div class="modal-route__close-box">
+                <button
+                    @click="closeModalRoute"
+                    class="modal-route__close-btn"
+                    type="button"
+                >
                     <Icon class="modal-route__close-ico" size="24">
                         <Close />
                     </Icon>
-                </div>
+                </button>
+            </div>
 
-                <div class="modal-route__component-box">
-                    <component :is="Component" />
-                </div>
+            <div class="modal-route__component-box">
+                <component :is="Component" />
             </div>
         </div>
-    </Teleport>
+    </div>
 </template>
 
 <style lang="scss">
@@ -59,6 +74,11 @@ const Component = defineAsyncComponent(() => {
         position: absolute;
         right: 10px;
         top: 10px;
+    }
+
+    &__close-btn {
+        border: none;
+        background-color: transparent;
     }
 
     &__close-ico {

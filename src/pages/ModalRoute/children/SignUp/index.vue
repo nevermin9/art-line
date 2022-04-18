@@ -3,6 +3,7 @@ import { ref } from "vue"
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
 import useAuth from "@/composition/auth";
+import routesNames from "@/router/routesNames";
 
 const email = ref("");
 const password = ref("");
@@ -19,7 +20,7 @@ function onSubmit(e: Event) {
 <template>
     <div class="auth-box">
         <h2 class="auth-box__headline">
-            Registration
+            Sign up
         </h2>
 
         <form
@@ -52,21 +53,25 @@ function onSubmit(e: Event) {
 
             <VButton
                 class="auth-box__btn"
-                type="submit"
+                btn-type="submit"
             >
                 <template #text>
-                    Register
+                    Sign up
                 </template>
             </VButton>
+
+            <p class="auth-box__suggest-text">
+                or you can
+            </p>
 
 <!-- should be link -->
             <VButton
                 class="auth-box__btn"
                 design="second"
-                type="button"
+                :path="{ name: routesNames.signIn }"
             >
                 <template #text>
-                    Login
+                    Sign in
                 </template>
             </VButton>
         </form>
@@ -74,29 +79,32 @@ function onSubmit(e: Event) {
 </template>
 
 <style lang="scss">
-.auth-box {
-    $root: &;
+@import "@/styles/pages/ModalRoute/children/AuthBox";
+// .auth-box {
+//     $root: &;
 
-    padding: 42px 20px 32px;
+//     padding: 42px 20px 32px;
 
-    &__headline {
-        margin-bottom: 16px;
-        text-align: center;
-        font-size: 24px;
-    }
+//     &__headline {
+//         margin-bottom: 16px;
+//         text-align: center;
+//         font-size: 24px;
+//     }
 
-    &__input {
-        margin-bottom: 8px;
+//     &__input {
+//         margin-bottom: 8px;
+//     }
 
-        &#{ $root }__input--last-input {
-            margin-bottom: 16px;
-        }
-    }
+//     &__btn:not(:last-child),
+//     &__suggest-text {
+//         margin-bottom: 16px;
+//     }
 
-    &__btn:not(:last-child) {
-        margin-bottom: 16px;
-    }
-}
+//     &__suggest-text {
+//         margin-bottom: 16px;
+//         text-align: center;
+//     }
+// }
 </style>
 
 

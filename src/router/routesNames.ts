@@ -1,6 +1,8 @@
-export const routesNames = {
+const routesNames = {
     home: "Home",
     gallery: "Gallery",
-    login: "Login",
-    registration: "Registration",
+    signIn: "Sign In",
+    signUp: "Sign Up",
 };
+
+export default routesNames;

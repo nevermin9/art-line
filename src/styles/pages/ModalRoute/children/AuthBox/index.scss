@@ -1,0 +1,25 @@
+.auth-box {
+    $root: &;
+
+    padding: 42px 20px 32px;
+
+    &__headline {
+        margin-bottom: 16px;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    &__input {
+        margin-bottom: 8px;
+    }
+
+    &__btn:not(:last-child),
+    &__suggest-text {
+        margin-bottom: 16px;
+    }
+
+    &__suggest-text {
+        margin-bottom: 16px;
+        text-align: center;
+    }
+}

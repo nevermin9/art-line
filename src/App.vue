@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import TheCurtain from "@/components/TheCurtain/index.vue";
-import VInput from "@/components/VInput/index.vue";
-import VButton from "@/components/VButton/index.vue"
-const print = function(e: MouseEvent) {
-    console.log("print");
-    console.log(e);
-}
 </script>
 
 <template>
@@ -14,7 +8,8 @@ const print = function(e: MouseEvent) {
         hello world
     </h1>
     <div>
-        <router-view></router-view>
+        <router-view />
+        <router-view :key="$route.fullPath" name="modal" />
     </div>
 </template>
 

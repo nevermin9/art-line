@@ -2,21 +2,29 @@
 import { ref } from "vue"
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
+import routesNames from "@/router/routesNames";
 
 const email = ref("");
 const password = ref("");
+
+function onSubmit(e: Event) {
+    console.log("submit success", e);
+}
 
 </script>
 
 <template>
     <div class="auth-box">
-        <h2>
-            Login
-
+        <h2 class="auth-box__headline">
+            Sign in
         </h2>
-        <form class="auth-box__form">
+
+        <form
+            class="auth-box__form"
+            @submit.prevent="onSubmit"
+        >
             <VInput
-                class="auth__input auth__input--email"
+                class="auth-box__input auth-box__input--email"
                 v-model="email"
                 label="Email"
                 placeholder="your_email@emailbox.com"
@@ -24,7 +32,7 @@ const password = ref("");
             />
 
             <VInput
-                class="auth__input auth__input--password"
+                class="auth-box__input auth-box__input--password"
                 v-model="password"
                 label="Password"
                 placeholder="*********"
@@ -32,22 +40,26 @@ const password = ref("");
             />
 
             <VButton
-                class="auth__btn"
-                type="submit"
+                class="auth-box__btn"
+                btn-type="submit"
             >
                 <template #text>
-                    Login
+                    Sign in
                 </template>
             </VButton>
 
+            <p class="auth-box__suggest-text">
+                or you can
+            </p>
+
 <!-- should be link -->
             <VButton
-                class="auth__btn"
+                class="auth-box__btn"
                 design="second"
-                type="button"
+                :path="{ name: routesNames.signUp }"
             >
                 <template #text>
-                    Register
+                    Sign up
                 </template>
             </VButton>
         </form>
@@ -55,6 +67,7 @@ const password = ref("");
 </template>
 
 <style lang="scss">
+@import "@/styles/pages/ModalRoute/children/AuthBox";
 </style>
 
 
