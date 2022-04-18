@@ -1,0 +1,1 @@
+export { setDefaultViewComponent } from "./setDefaultViewComponent";

@@ -1,7 +1,11 @@
-import { createRouter, RouteRecordRaw, createWebHistory } from "vue-router"
+import { createRouter, RouteRecordRaw, createWebHistory } from "vue-router";
 import routesNames from "./routesNames";
+import { registerGlobalHooks } from "./middlewares/global";
+import { setDefaultViewComponent } from "./middlewares/per-route";
 
-const Home = () => import("@/pages/Home/index.vue")
+const Home = () => import("@/pages/Home/index.vue");
+const ModalRoute = () => import("@/pages/ModalRoute/index.vue");
+const Gallery = () => import("@/pages/Gallery/index.vue");
 
 const routes: RouteRecordRaw[] = [
     {
@@ -14,7 +18,7 @@ const routes: RouteRecordRaw[] = [
         name: routesNames.signIn,
         components: {
             default: Home,
-            modal: () => import("@/pages/ModalRoute/index.vue"),
+            modal: ModalRoute,
         }, 
         props: {
             modal: {
@@ -25,18 +29,14 @@ const routes: RouteRecordRaw[] = [
             isModal: true,
             lastNotModalRoute: null,
         },
-        beforeEnter: ((to, from) => {
-            if (from.matched.length > 0) {
-                to.matched[0].components.default = from.matched[0].components.default;
-            }
-        })
+        beforeEnter: setDefaultViewComponent,
     },
     {
         path: "/sign-up",
         name: routesNames.signUp,
         components: {
             default: Home,
-            modal: () => import("@/pages/ModalRoute/index.vue"),
+            modal: ModalRoute,
         }, 
         props: {
             modal: {
@@ -46,12 +46,13 @@ const routes: RouteRecordRaw[] = [
         meta: {
             isModal: true,
             lastNotModalRoute: null,
-        }
+        },
+        beforeEnter: setDefaultViewComponent,
     },
     {
         path: "/gallery",
         name: routesNames.gallery,
-        component: () => import("@/pages/Gallery/index.vue"),
+        component: Gallery,
     },
 ];
 
@@ -60,26 +61,7 @@ const router = createRouter({
     routes,
 });
 
-function remember(to: any, from: any) {
-    if (!from?.meta?.isModal && to.meta.isModal && !to.meta.lastNotModalRoute) {
-        to.meta.lastNotModalRoute = {
-            path: from.path,
-            hash: from.hash,
-            query: from.query,
-        };
-    }
-
-    if (from.meta.isModal && to.meta.isModal) {
-        to.meta.lastNotModalRoute = from.meta.lastNotModalRoute;
-    }
-
-    if (from.meta.isModal && !to?.meta?.isModal && to.meta.lastNotModalRoute) {
-        to.meta.lastNotModalRoute = null;
-    }
-}
-
-
-router.beforeResolve(remember);
+registerGlobalHooks(router);
 
 export default router;
 
