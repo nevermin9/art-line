@@ -1,3 +1,10 @@
+$left_deg: 90deg;
+$right_deg: 270deg;
+
+@mixin decor-line-gradient($deg) {
+    background: linear-gradient($deg, rgba(2,0,36,0) 0%, $third-color 30%);
+}
+
 .auth-box {
     $root: &;
 
@@ -29,11 +36,11 @@
         height: 1px;
 
         &#{ $root }__decor-line--left {
-            background: linear-gradient(90deg, rgba(2,0,36,0) 0%, $third-color 30%);
+            @include decor-line-gradient($left_deg)
         }
 
         &#{ $root }__decor-line--right {
-            background: linear-gradient(270deg, rgba(2,0,36,0) 0%, $third-color 30%);
+            @include decor-line-gradient($right_deg)
         }
     }
 
