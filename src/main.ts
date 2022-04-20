@@ -1,6 +1,10 @@
 import { createApp } from "vue"
 import router from "./router"
 import App from "./App.vue"
-// import { auth } from "./firebase";
+import { createPinia } from "pinia";
 
-createApp(App).use(router).mount('#app')
+const pinia = createPinia();
+console.log('🚀 ~ file: main.ts ~ line 7 ~ pinia', pinia.state);
+
+createApp(App).use(pinia).use(router).mount('#app')
+console.log('🚀 ~ file: main.ts ~ line 7 ~ pinia', pinia.state);
