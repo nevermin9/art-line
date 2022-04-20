@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase";
 
-const useUserStore = defineStore("user", {
+export const useUserStore = defineStore("user", {
     state: () => ({
         userData: null,
     } as UserStore),

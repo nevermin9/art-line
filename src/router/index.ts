@@ -1,7 +1,7 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from "vue-router";
 import routesNames from "./routesNames";
-import { registerGlobalHooks } from "./middlewares/global";
-import { setDefaultViewComponent } from "./middlewares/per-route";
+import { registerGlobalHooks } from "./guards/global";
+import { setDefaultViewComponent } from "./guards/per-route";
 
 const Home = () => import("@/pages/Home/index.vue");
 const ModalRoute = () => import("@/pages/ModalRoute/index.vue");
@@ -53,6 +53,9 @@ const routes: RouteRecordRaw[] = [
         path: "/gallery",
         name: routesNames.gallery,
         component: Gallery,
+        meta: {
+            forLogged: true,
+        }
     },
 ];
 

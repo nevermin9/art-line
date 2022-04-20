@@ -3,7 +3,7 @@ import { RouteLocationNormalized, RouteLocationRaw  } from "vue-router";
 export function rememberDefaultRoute(
     to: RouteLocationNormalized,
     from: RouteLocationNormalized
-): void | RouteLocationRaw | boolean {
+): void | RouteLocationRaw {
     if (!from?.meta?.isModal && to.meta.isModal && !to.meta.lastNotModalRoute) {
         to.meta.lastNotModalRoute = {
             path: from.path,
