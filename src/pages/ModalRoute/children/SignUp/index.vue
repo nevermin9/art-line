@@ -60,8 +60,14 @@ function onSubmit(e: Event) {
                 </template>
             </VButton>
 
-            <p class="auth-box__suggest-text">
-                or you can
+            <p class="auth-box__suggest-box">
+                <div class="auth-box__decor-line auth-box__decor-line--left"></div>
+
+                <span class="auth-box__suggest-text">
+                    or
+                </span>
+
+                <div class="auth-box__decor-line auth-box__decor-line--right"></div>
             </p>
 
 <!-- should be link -->
@@ -80,31 +86,6 @@ function onSubmit(e: Event) {
 
 <style lang="scss">
 @import "@/styles/pages/ModalRoute/children/AuthBox";
-// .auth-box {
-//     $root: &;
-
-//     padding: 42px 20px 32px;
-
-//     &__headline {
-//         margin-bottom: 16px;
-//         text-align: center;
-//         font-size: 24px;
-//     }
-
-//     &__input {
-//         margin-bottom: 8px;
-//     }
-
-//     &__btn:not(:last-child),
-//     &__suggest-text {
-//         margin-bottom: 16px;
-//     }
-
-//     &__suggest-text {
-//         margin-bottom: 16px;
-//         text-align: center;
-//     }
-// }
 </style>
 
 

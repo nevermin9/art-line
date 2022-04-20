@@ -13,13 +13,34 @@
         margin-bottom: 8px;
     }
 
-    &__btn:not(:last-child),
-    &__suggest-text {
+    &__btn:not(:last-child) {
         margin-bottom: 16px;
     }
 
-    &__suggest-text {
+    &__suggest-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-bottom: 16px;
-        text-align: center;
+    }
+
+    &__decor-line {
+        width: 33%;
+        height: 1px;
+
+        &#{ $root }__decor-line--left {
+            background: linear-gradient(90deg, rgba(2,0,36,0) 0%, $third-color 30%);
+        }
+
+        &#{ $root }__decor-line--right {
+            background: linear-gradient(270deg, rgba(2,0,36,0) 0%, $third-color 30%);
+        }
+    }
+
+    &__suggest-text {
+        font-size: 12px;
+        margin: 0 8px;
+        text-transform: uppercase;
+        color: $third-color;
     }
 }
