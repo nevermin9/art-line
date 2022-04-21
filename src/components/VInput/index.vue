@@ -146,6 +146,12 @@ const value = computed({
         &#{ $root }__label--error {
             color: $error-color;
         }
+
+        @include device-with-hover {
+            &:hover {
+                cursor: text;
+            }
+        }
     }
 
     &__label-text {

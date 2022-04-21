@@ -1,0 +1,5 @@
+@mixin device-with-hover() {
+    @media (hover: hover)  {
+        @content;
+    }
+}

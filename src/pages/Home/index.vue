@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import VLink from "@/components/VLink/index.vue";
 </script>
+
 <template>
     <h1>
         iam home
@@ -10,9 +12,15 @@
         </router-link>
     </div>
     <div>
-        <router-link :to="{ name: 'Gallery' }">
-            to gallery
-        </router-link>
+        <VLink
+            :path="{ name: 'Gallery' }"
+            bold
+            uppercase
+            :font-size="'18px'"
+            letter-spacing="2px"
+        >
+            GO TO GALLERY
+        </VLink>
     </div>
 
     <section class="home">

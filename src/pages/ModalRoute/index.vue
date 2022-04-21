@@ -83,6 +83,12 @@ const Component = defineAsyncComponent(() => {
     &__close-btn {
         border: none;
         background-color: transparent;
+
+        @include device-with-hover {
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 
     &__close-ico {

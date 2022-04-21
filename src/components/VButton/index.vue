@@ -83,10 +83,13 @@ const customAttrs = {
             background-color: $third-color;
             color: $second-color;
 
-            &:hover {
-                background-color: $font-general;
-            }
+            @include device-with-hover {
+                cursor: pointer;
 
+                &:hover {
+                    background-color: $font-general;
+                }
+            }
         }
 
         &#{ $root }__button--second {
@@ -95,14 +98,24 @@ const customAttrs = {
             border-color: $third-color;
             color: $third-color;
 
-            &:hover {
-                border-color: $font-general;
-                color: $font-general;
+            @include device-with-hover {
+                cursor: pointer;
+
+                &:hover {
+                    border-color: $font-general;
+                    color: $font-general;
+                }
             }
         }
 
         &:active {
             transform: translateY(5px);
+        }
+    }
+
+    &__text {
+        @include device-with-hover {
+            cursor: pointer;
         }
     }
 }
