@@ -5,10 +5,8 @@ import TheLogo from "@/components/TheLogo/index.vue";
 
 <template>
     <TheCurtain />
-    <h1 class="title">
-        hello world
-    </h1>
-    <div>
+
+    <div class="">
         <TheLogo with-animation />
     </div>
     <div>

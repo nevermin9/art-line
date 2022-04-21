@@ -76,9 +76,18 @@ const { fontSize, letterSpacing } = toRefs(props);
         width: 100%;
         height: 5px;
         background-color: $font-general;
-        transform: translateY(5px);
-        opacity: 0;
-        transition: all $animation-duration;
+
+        transform: translateY(1px) rotate(2deg);
+        opacity: 1;
+        // transform: translateY(5px);
+        // opacity: 0;
+        // transition: all $animation-duration;
+
+        @include media("L") {
+            transform: translateY(5px);
+            opacity: 0;
+            transition: all $animation-duration;
+        }
     }
 
     @include device-with-hover {
