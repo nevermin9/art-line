@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, toRefs } from "vue";
+import { useDevice } from "@/composition/device";
 
 const props = defineProps({
     width: {
@@ -17,6 +18,7 @@ const props = defineProps({
 });
 
 const { width, height, withAnimation } = toRefs(props);
+const { isMobile } = useDevice();
 
 const COEFFICIENT = .01;
 const svg = ref<HTMLElement | null>(null);
@@ -56,7 +58,8 @@ function init() {
 
 
 onMounted(() => {
-    if (withAnimation.value) {
+    console.log('🚀 ~ file: index.vue ~ line 63 ~ onMounted ~ isMobile.value', isMobile.value)
+    if (withAnimation.value && !isMobile.value) {
         init();
     }
 });
