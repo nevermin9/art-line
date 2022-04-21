@@ -1,3 +1,5 @@
+<script lang="ts" setup>
+</script>
 <template>
     <h1>
         iam home
@@ -12,4 +14,19 @@
             to gallery
         </router-link>
     </div>
+
+    <section class="home">
+        <div class="home__logo-box">
+        </div>
+    </section>
 </template>
+
+<style lang="scss">
+.home {
+    &__logo-box {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+</style>

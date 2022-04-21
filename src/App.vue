@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TheCurtain from "@/components/TheCurtain/index.vue";
+import TheLogo from "@/components/TheLogo/index.vue";
 </script>
 
 <template>
@@ -7,6 +8,9 @@ import TheCurtain from "@/components/TheCurtain/index.vue";
     <h1 class="title">
         hello world
     </h1>
+    <div>
+        <TheLogo with-animation />
+    </div>
     <div>
         <router-view />
 
