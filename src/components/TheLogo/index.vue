@@ -58,7 +58,6 @@ function init() {
 
 
 onMounted(() => {
-    console.log('🚀 ~ file: index.vue ~ line 63 ~ onMounted ~ isMobile.value', isMobile.value)
     if (withAnimation.value && !isMobile.value) {
         init();
     }
