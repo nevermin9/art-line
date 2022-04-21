@@ -49,22 +49,6 @@ const customAttrs = {
         class="v-button"
         v-bind="$attrs"
     >
-        <!-- <component
-            :is="componentType"
-            :class="{
-                'v-button__button': true,
-                [`v-button__button--${design}`]: Boolean(design),
-            }"
-            :type="type"
-            @click="$attrs.onClick"
-            :to=""
-        >
-            <span
-                class="v-button__text"
-            >
-                <slot name="text"></slot>
-            </span>
-        </component> -->
         <component
             :is="componentType"
             v-bind="customAttrs"
