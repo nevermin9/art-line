@@ -3,38 +3,44 @@ import VLink from "@/components/VLink/index.vue";
 </script>
 
 <template>
-    <h1>
-        iam home
-    </h1>
-    <div>
-        <router-link :to="{name: 'Sign In'}">
-            sign in
-        </router-link>
-    </div>
-    <div>
-        <VLink
-            :path="{ name: 'Gallery' }"
-            bold
-            uppercase
-            :font-size="'18px'"
-            letter-spacing="2px"
-        >
-            GO TO GALLERY
-        </VLink>
-    </div>
-
     <section class="home">
-        <div class="home__logo-box">
+        <div class="home__box home__box--first">
+            <VLink
+                :path="{ name: 'Gallery' }"
+                bold
+                uppercase
+                :font-size="'24px'"
+                letter-spacing="2px"
+            >
+                GO TO GALLERY
+            </VLink>
+        </div>
+
+        <!-- v-if isLogged === false -->
+        <div class="home__box home__box--second">
+            <VLink
+                :path="{ name: 'Sign In' }"
+                bold
+                uppercase
+                :font-size="'24px'"
+                letter-spacing="2px"
+            >
+                Sign in
+            </VLink>
         </div>
     </section>
 </template>
 
 <style lang="scss">
 .home {
-    &__logo-box {
-        display: flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    @include media("L") {
+        flex-direction: row;
         justify-content: center;
     }
 }
-
 </style>

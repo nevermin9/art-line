@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive, onMounted, toRefs } from "vue";
+import { ref, reactive, onMounted, toRefs, PropType } from "vue";
 import { useDevice } from "@/composition/device";
 
 const props = defineProps({

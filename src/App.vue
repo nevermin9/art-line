@@ -1,42 +1,88 @@
 <script setup lang="ts">
 import TheCurtain from "@/components/TheCurtain/index.vue";
 import TheLogo from "@/components/TheLogo/index.vue";
+import VLink from "@/components/VLink/index.vue";
+import { useDevice } from "./composition/device";
+
+
+const { isMobile } = useDevice();
+function defineLogoProps(obj: Record<string, string | boolean>) {
+    if (!isMobile.value) {
+        obj = {
+            "width": "450px",
+            "height": "150px",
+            "with-animation": true,
+        };
+    }
+
+    return obj;
+}
+// should be reactive to react on scroll
+const logoProps = defineLogoProps({});
+
 </script>
 
 <template>
-    <TheCurtain />
+    <section class="app">
+        <TheCurtain />
 
-    <div class="">
-        <TheLogo with-animation />
-    </div>
-    <div>
-        <router-view />
+        <div class="app__logo">
+            <TheLogo
+                v-bind="logoProps"
+            />
+        </div>
 
-        <router-view
-            :key="$route.fullPath"
-            name="modal"
-            v-slot="{ Component }"
-        >
-            <Transition name="fade">
-                <component :is="Component" />
-            </Transition>
-        </router-view>
-    </div>
+        <div class="app__content">
+            <router-view />
+
+            <router-view
+                :key="$route.fullPath"
+                name="modal"
+                v-slot="{ Component }"
+            >
+                <Transition name="fade">
+                    <component :is="Component" />
+                </Transition>
+            </router-view>
+        </div>
+
+        <aside class="app__aside">
+            <VLink
+                :path="{ name: 'Home' }"
+                bold
+                letter-spacing="2px"
+            >
+                about the author
+            </VLink>
+        </aside>
+    </section>
 </template>
 
 <style lang="scss">
 @import "@/styles/base";
-.form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 20px auto;
-    height: 200px;
-    max-width: 400px;
-    padding: 0 8px;
+#app {
+    min-height: 100vh;
 }
 
-.title {
-    color: white;
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: inherit;
+
+    &__logo {
+        padding-top: 75px;
+        margin-bottom: 32px;
+    }
+
+    &__aside {
+        display: flex;
+        justify-content: center;
+        margin: auto 0 0;
+        padding: 16px;
+        width: 80%;
+        border-top: .5px solid $input-border--focus;
+    }
 }
+
 </style>
