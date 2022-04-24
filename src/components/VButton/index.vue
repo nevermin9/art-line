@@ -26,21 +26,25 @@ const props = defineProps({
     path: {
         type: [String, Object] as PropType<RouteLocationRaw>,
         default: null,
-    }
+    },
+    disabled: {
+        type: Boolean as PropType<boolean | null>,
+        default: null,
+    },
 });
 
 const componentType = computed(() => {
     return props.path ? "router-link" : "button";
 });
 
-const customAttrs = {
+const customStaticAttrs = {
     class: {
         'v-button__button': true,
-        [`v-button__button--${props.design}`]: Boolean(props.design),
+        [`v-button__button--${props.design}`]: true,
     },
     [props.path ? "" : "type"]: props.btnType,
     [props.path ? "to" : ""]: props.path,
-}
+};
 
 </script>
 
@@ -51,8 +55,9 @@ const customAttrs = {
     >
         <component
             :is="componentType"
-            v-bind="customAttrs"
+            v-bind="customStaticAttrs"
             @click="$attrs.onClick"
+            :disabled="disabled"
         >
             <span
                 class="v-button__text"
@@ -84,9 +89,8 @@ const customAttrs = {
             color: $second-color;
 
             @include device-with-hover {
-                cursor: pointer;
-
-                &:hover {
+                &:not([disabled]):hover {
+                    cursor: pointer;
                     background-color: $font-general;
                 }
             }
@@ -99,17 +103,31 @@ const customAttrs = {
             color: $third-color;
 
             @include device-with-hover {
-                cursor: pointer;
-
-                &:hover {
+                &:not([disabled]):hover {
+                    cursor: pointer;
                     border-color: $font-general;
                     color: $font-general;
                 }
             }
         }
 
-        &:active {
+        &:not([disabled]):active {
             transform: translateY(5px);
+        }
+
+        &[disabled] {
+            opacity: .6;
+
+            @include device-with-hover {
+                &:hover {
+                    cursor: not-allowed;
+                }
+
+                #{ $root }__text:hover {
+                    cursor: not-allowed;
+                }
+            }
+
         }
     }
 

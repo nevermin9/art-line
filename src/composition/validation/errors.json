@@ -1,0 +1,10 @@
+{
+    "email": {
+        "invalid": "Email is invalid"
+    },
+    "password": {
+        "confirmation_is_not_match": "The password confirmation is not match",
+        "short": "Password is short. It must contain 8 or more chars",
+        "no_digits": "Password must contain at least one digit"
+    }
+}

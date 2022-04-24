@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, Ref } from "vue";
+import { computed, ref, PropType } from "vue";
 import { EyeOutline } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
+import { ValidationErrors } from "@/types/Validation";
 
 const id = (Date.now() * Math.random()).toString();
 
@@ -21,9 +22,9 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    error: {
-        type: String,
-        default: "",
+    errors: {
+        type: Array as PropType<ValidationErrors>,
+        default: () => [],
     },
     type: {
         type: String,
@@ -69,7 +70,7 @@ function isShownPassword(inputType: string) {
             <input
                 :class="{
                     'v-input__input': true,
-                    'v-input__input--error': error.length > 0,
+                    'v-input__input--error': errors.length > 0,
                 }"
                 v-model="value"
                 :placeholder="placeholder"
@@ -80,7 +81,7 @@ function isShownPassword(inputType: string) {
             <label
                 :class="{
                     'v-input__label': true,
-                    'v-input__label--error': error.length > 0,
+                    'v-input__label--error': errors.length > 0,
                 }"
                 :for="id"
             >
@@ -106,14 +107,17 @@ function isShownPassword(inputType: string) {
             </button>
         </div>
 
-        <div class="v-input__error-box">
-            <span
-                v-if="error.length > 0"
-                class="v-input__error-text"
-            >
-                {{ error }}
-            </span>
-        </div>
+        <ul class="v-input__error-box">
+            <template v-if="errors.length > 0">
+                <li
+                    v-for="(error, i) in errors"
+                    class="v-input__error-text"
+                    :key="i"
+                >
+                    {{ error }}
+                </li>
+            </template>
+        </ul>
     </div>
 </template>
 
@@ -261,8 +265,9 @@ function isShownPassword(inputType: string) {
     }
 
     &__error-box {
-        padding: 0 4px;
-        height: 18.5px;
+        list-style: none;
+        padding: 1px 4px 0;
+        min-height: 18.5px;
     }
 
     &__error-text {

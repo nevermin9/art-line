@@ -1,18 +1,36 @@
 <script lang="ts" setup>
-import { ref } from "vue"
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
+
+import { computed } from "vue";
 import useAuth from "@/composition/auth";
 import routesNames from "@/router/routesNames";
+import { useValidation } from "@/composition/validation";
 
-const email = ref("");
-const password = ref("");
-const repeatPassword = ref("");
+const {
+    email,
+    emailErrors,
+    password,
+    repeatPassword,
+    passwordErrors,
+    repeatPasswordErrors,
+} = useValidation();
+
 const { registerUser } = useAuth();
 
+const isValidForm = computed(() => {
+    return emailErrors.value.length === 0 &&
+        passwordErrors.value.length === 0 &&
+        repeatPasswordErrors.value.length === 0;
+});
+
 function onSubmit(e: Event) {
+    if (!isValidForm) {
+        return;
+    }
+
     console.log("aaaaaa", e)
-    registerUser(email.value, password.value);
+    // registerUser(email.value, password.value);
 }
 
 </script>
@@ -33,6 +51,7 @@ function onSubmit(e: Event) {
                 label="Email"
                 placeholder="your_email@emailbox.com"
                 type="email"
+                :errors="emailErrors"
             />
 
             <VInput
@@ -41,6 +60,7 @@ function onSubmit(e: Event) {
                 label="Password"
                 placeholder="*********"
                 type="password"
+                :errors="passwordErrors"
             />
 
             <VInput
@@ -49,11 +69,13 @@ function onSubmit(e: Event) {
                 label="Repeat password"
                 placeholder="*********"
                 type="password"
+                :errors="repeatPasswordErrors"
             />
 
             <VButton
                 class="auth-box__btn"
                 btn-type="submit"
+                :disabled="!isValidForm"
             >
                 <template #text>
                     Sign up
@@ -70,7 +92,6 @@ function onSubmit(e: Event) {
                 <div class="auth-box__decor-line auth-box__decor-line--right"></div>
             </p>
 
-<!-- should be link -->
             <VButton
                 class="auth-box__btn"
                 design="second"
