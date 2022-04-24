@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed, ref, Ref } from "vue";
+import { EyeOutline } from "@vicons/ionicons5";
+import { Icon } from "@vicons/utils";
 
 const id = (Date.now() * Math.random()).toString();
+
+const PASSWORD_INPUT_TYPE = "password";
+const TEXT_INPUT_TYPE = "text";
 
 const props = defineProps({
     modelValue: {
@@ -36,7 +41,25 @@ const value = computed({
     set(val) {
         emit("update:modelValue", val);
     }
-})
+});
+
+const isPasswordInput = computed(() => {
+    return props.type === PASSWORD_INPUT_TYPE;
+});
+
+const refInputType = ref(props.type);
+
+function showPassword(e: Event) {
+    if (isShownPassword(refInputType.value)) {
+        refInputType.value = PASSWORD_INPUT_TYPE;
+    } else {
+        refInputType.value = TEXT_INPUT_TYPE;
+    }
+}
+
+function isShownPassword(inputType: string) {
+    return inputType === TEXT_INPUT_TYPE;
+}
 
 </script>
 
@@ -50,7 +73,7 @@ const value = computed({
                 }"
                 v-model="value"
                 :placeholder="placeholder"
-                :type="type"
+                :type="refInputType"
                 :id="id"
             >
 
@@ -65,6 +88,22 @@ const value = computed({
                     {{ label }}
                 </span>
             </label>
+
+            <button
+                v-if="isPasswordInput"
+                class="v-input__show-pass-btn"
+                type="button"
+                @click="showPassword"
+            >
+                <Icon
+                    :class="{
+                        'v-input__show-pass-ico': true,
+                        'v-input__show-pass-ico--crossed': isShownPassword(refInputType),
+                    }"
+                >
+                    <EyeOutline></EyeOutline>
+                </Icon>
+            </button>
         </div>
 
         <div class="v-input__error-box">
@@ -83,6 +122,7 @@ const value = computed({
     $root: &;
 
     &__input-box {
+        position: relative;
         display: flex;
         flex-direction: column-reverse;
     }
@@ -175,6 +215,49 @@ const value = computed({
     &__input {
         transition: all $animation-duration;
         touch-action: manipulation;
+    }
+
+    &__show-pass-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+        display: flex;
+        background-color: transparent;
+        border: none;
+
+        @include device-with-hover {
+            &:hover {
+                cursor: pointer;
+
+                #{ $root }__show-pass-ico {
+                    color: $font-general;
+                }
+            }
+        }
+    }
+
+    &__show-pass-ico {
+        color: $font-passive;
+        transition: color $animation-duration;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: currentColor;
+            transform: rotate(30deg) translateY(-50%);
+            opacity: 0;
+            transition: opacity $animation-duration;
+        }
+
+        &#{ $root }__show-pass-ico--crossed {
+            &::after {
+                opacity: 1;
+            }
+        }
     }
 
     &__error-box {
