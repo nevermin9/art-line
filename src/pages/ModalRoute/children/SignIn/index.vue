@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
 import routesNames from "@/router/routesNames";
+import Loader from "@/components/Loader/index.vue";
 
 const email = ref("");
 const password = ref("");
@@ -11,10 +12,40 @@ function onSubmit(e: Event) {
     console.log("submit success", e);
 }
 
+const loading = ref(true);
+const success = ref(false);
+const fail = ref(false);
+const animationFinishIn = ref(0);
+const showLoader = ref(false)
+
+setTimeout(() => {
+    showLoader.value = true;
+    // success.value = true;
+    setTimeout(() => {
+        loading.value = false;
+        success.value = true;
+    }, 2000);
+}, 4000);
+
+function onAnimationEnd(e: any) {
+    console.log(e);
+    showLoader.value = false;
+}
+
 </script>
 
 <template>
     <div class="auth-box">
+        <transition name="loader-component">
+            <Loader
+                v-if="showLoader"
+                :is-loading="loading"
+                :is-success="success"
+                :is-fail="fail"
+                @animation-end="onAnimationEnd"
+            />
+        </transition>
+
         <h2 class="auth-box__headline">
             Sign in
         </h2>

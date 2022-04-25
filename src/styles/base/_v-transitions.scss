@@ -8,3 +8,27 @@
 .fade-leave-to {
     opacity: 0;
 }
+
+// Loader/index.vue transition
+.loader-component-enter-active {
+    transform-origin: top;
+    animation-name: expand;
+    animation-duration: .3s;
+}
+
+.loader-component-leave-active {
+    transform-origin: top;
+    animation-name: expand;
+    animation-duration: .3s;
+    animation-direction: reverse;
+}
+
+@keyframes expand {
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}

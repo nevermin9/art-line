@@ -21,6 +21,8 @@ const { width, height, withAnimation } = toRefs(props);
 const { isMobile } = useDevice();
 
 const COEFFICIENT = .01;
+const MAX_X = 6;
+const MIN_X = -5;
 const svg = ref<HTMLElement | null>(null);
 const svgMiddle = reactive({
     x: 0,
@@ -39,7 +41,11 @@ function listener(e: MouseEvent) {
     mouse.x = e.x;
     mouse.y = e.y;
 
-    const x = (mouse.x - svgMiddle.x) * COEFFICIENT;
+    const calculatedX = (mouse.x - svgMiddle.x) * COEFFICIENT;
+
+    const x = calculatedX > 0 && calculatedX > MAX_X ? MAX_X :
+        calculatedX < 0 && calculatedX < MIN_X ? MIN_X 
+        : calculatedX;
     const y = (mouse.y - svgMiddle.y) * COEFFICIENT;
 
     lettersX.value = `${x}px`

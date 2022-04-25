@@ -9,7 +9,7 @@ import {
     isPasswordLengthValid,
 } from "./helpers";
 
-function createDebouncedSetter<T>(refVal: Ref<T>) {
+function createDebouncedSetter<T>(refVal: Ref<T>): (val: T) => void {
     const TIMEOUT = 800;
 
     return debounce((newVal: T) => {

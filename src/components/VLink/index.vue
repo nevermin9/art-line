@@ -78,6 +78,7 @@ const { fontSize, letterSpacing } = toRefs(props);
         background-color: $font-general;
         transform: translateY(1px) rotate(2deg);
         opacity: 1;
+        z-index: -1;
 
         @include media("L") {
             transform: translateY(5px);

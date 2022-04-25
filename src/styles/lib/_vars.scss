@@ -1,6 +1,7 @@
 $first-color: #0b421a;
 $second-color: #1a1a1a;
 $third-color: #eac784;
+$fourth-color: #FFF;
 $error-color: #E01020;
 
 $input-border: rgba(255,255,255,.15);
@@ -11,6 +12,8 @@ $font-passive: rgba(255,255,255,.8);
 
 $border-radius: 2px;
 $animation-duration: .3s;
+
+$z-index-over-everything: 9999;
 
 // media
 $SM: 576px;
