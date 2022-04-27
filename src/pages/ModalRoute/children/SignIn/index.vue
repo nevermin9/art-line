@@ -91,7 +91,6 @@ function onAnimationEnd(result: AnimationEndResult ) {
             <VButton
                 class="auth-box__btn"
                 btn-type="submit"
-                :disabled="!isFormFilled"
             >
                 <template #text>
                     Sign in

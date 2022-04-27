@@ -30,6 +30,22 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    isRequired: {
+        type: Boolean,
+        default: true,
+    },
+    minLength: {
+        type: [String, Number],
+        default: null,
+    },
+    maxLength: {
+        type: [String, Number],
+        default: null,
+    },
+    pattern: {
+        type: String,
+        default: null,
+    }
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -76,6 +92,10 @@ function isShownPassword(inputType: string) {
                 :placeholder="placeholder"
                 :type="refInputType"
                 :id="id"
+                :required="isRequired"
+                :minLength="minLength"
+                :maxLength="maxLength"
+                :pattern="pattern"
             >
 
             <label
