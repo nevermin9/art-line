@@ -37,6 +37,6 @@ export const useUserStore = defineStore("user", {
                 console.error("SignIn error", error);
                 throw error;
             }
-        }
+        },
     },
 });

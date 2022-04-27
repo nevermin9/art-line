@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { RouteLocationRaw } from "vue-router"
-import { toRefs, PropType } from "vue";
+import { toRefs, PropType, computed } from "vue";
 
 const props = defineProps({
     path: {
         type: [String, Object] as PropType<RouteLocationRaw>,
-        required: true,
+        default: null,
     },
     fontSize: {
         type: String,
@@ -25,12 +25,16 @@ const props = defineProps({
     },
 });
 
+const componentType = computed(() => {
+    return props.path ? "router-link" : "button";
+});
+
 const { fontSize, letterSpacing } = toRefs(props);
 
 </script>
 
 <template>
-    <router-link
+    <component :is="componentType"
         class="v-link"
         :to="path"
     >
@@ -44,7 +48,7 @@ const { fontSize, letterSpacing } = toRefs(props);
         </span>
 
         <span class="v-link__decor-line"></span>
-    </router-link>
+    </component>
 </template>
 
 <style lang="scss">
@@ -56,6 +60,15 @@ const { fontSize, letterSpacing } = toRefs(props);
     width: min-content;
     text-decoration: none;
     white-space: nowrap;
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    @include device-with-hover {
+        &:hover {
+            cursor: pointer;
+        }
+    }
 
     &__text {
         font-size: v-bind(fontSize);

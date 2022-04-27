@@ -1,5 +1,14 @@
 <script lang="ts" setup>
 import VLink from "@/components/VLink/index.vue";
+import routesNames from "@/router/routesNames";
+import { useUserStore } from "@/store/user";
+
+const userStore = useUserStore();
+
+function signOut(e: Event) {
+    userStore.$reset();
+}
+
 </script>
 
 <template>
@@ -19,13 +28,25 @@ import VLink from "@/components/VLink/index.vue";
         <!-- v-if isLogged === false -->
         <div class="home__box home__box--second">
             <VLink
-                :path="{ name: 'Sign In' }"
+                v-if="!userStore.isLogged"
+                :path="{ name: routesNames.signUp }"
                 bold
                 uppercase
                 :font-size="'24px'"
                 letter-spacing="2px"
             >
-                Sign in
+                Sign up
+            </VLink>
+
+            <VLink
+                v-else
+                @click="signOut"
+                bold
+                uppercase
+                :font-size="'24px'"
+                letter-spacing="2px"
+            >
+                Sign out
             </VLink>
         </div>
     </section>
