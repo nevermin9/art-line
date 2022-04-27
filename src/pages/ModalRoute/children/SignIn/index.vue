@@ -1,50 +1,67 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue"
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
-import routesNames from "@/router/routesNames";
 import Loader from "@/components/Loader/index.vue";
+
+import { AnimationEndResult } from "@/types/Loader";
+import { ServerSignInErrorCode } from "@/types/Validation";
+import { computed, ref } from "vue"
+import routesNames from "@/router/routesNames";
+import { useLoader } from "@/composition/loader";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "vue-router";
+import { useValidation } from "@/composition/validation";
+import { AuthError } from "firebase/auth";
+
+const {
+    startLoading,
+    successfulFinishLoading,
+    failedFinishLoading,
+} = useLoader();
+
+const userStore = useUserStore();
+
+const router = useRouter();
+
+const {
+    serverSignInErrorCodes,
+    serverSignInErrors,
+} = useValidation();
 
 const email = ref("");
 const password = ref("");
 
+const isFormFilled = computed(() => {
+    return email.value.length > 0 && password.value.length > 0;
+})
+
 function onSubmit(e: Event) {
-    console.log("submit success", e);
+    if (!isFormFilled.value) {
+        return;
+    }
+
+    startLoading();
+    userStore.signIn(email.value, password.value)
+        .then(() => {
+            successfulFinishLoading();
+        })
+        .catch((error: AuthError) => {
+            serverSignInErrorCodes.push(error.code as ServerSignInErrorCode);
+            failedFinishLoading();
+        })
 }
 
-const loading = ref(true);
-const success = ref(false);
-const fail = ref(false);
-const animationFinishIn = ref(0);
-const showLoader = ref(false)
-
-setTimeout(() => {
-    showLoader.value = true;
-    // success.value = true;
-    setTimeout(() => {
-        loading.value = false;
-        success.value = true;
-    }, 2000);
-}, 4000);
-
-function onAnimationEnd(e: any) {
-    console.log(e);
-    showLoader.value = false;
+function onAnimationEnd(result: AnimationEndResult ) {
+    if (result.isSuccess) {
+        router.push({ name: routesNames.gallery });
+    }
 }
 
 </script>
 
 <template>
     <div class="auth-box">
-        <transition name="loader-component">
-            <Loader
-                v-if="showLoader"
-                :is-loading="loading"
-                :is-success="success"
-                :is-fail="fail"
-                @animation-end="onAnimationEnd"
-            />
-        </transition>
+        <Loader @animation-end="onAnimationEnd" />
 
         <h2 class="auth-box__headline">
             Sign in
@@ -60,6 +77,7 @@ function onAnimationEnd(e: any) {
                 label="Email"
                 placeholder="your_email@emailbox.com"
                 type="email"
+                :errors="serverSignInErrors"
             />
 
             <VInput
@@ -73,6 +91,7 @@ function onAnimationEnd(e: any) {
             <VButton
                 class="auth-box__btn"
                 btn-type="submit"
+                :disabled="!isFormFilled"
             >
                 <template #text>
                     Sign in

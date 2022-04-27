@@ -1,6 +1,6 @@
 import errors from "./errors.json";
-import { computed, ref, Ref } from "vue";
-import { ValidationErrors } from "@/types/Validation";
+import { computed, ref, Ref, reactive } from "vue";
+import { ValidationErrors, ServerSignInErrorCode } from "@/types/Validation";
 import debounce from "lodash.debounce";
 import {
     isEmailValid,
@@ -88,6 +88,14 @@ export function useValidation() {
         return errorsList;
     });
 
+    const serverSignInErrorCodes = reactive<ServerSignInErrorCode[]>([]);
+
+    const serverSignInErrors = computed<string[] | []>(() => {
+        return serverSignInErrorCodes.map((code: ServerSignInErrorCode) => {
+            return errors.server.sign_in[code];
+        });
+    });
+
     return {
         email,
         emailErrors,
@@ -95,5 +103,7 @@ export function useValidation() {
         passwordErrors,
         repeatPassword,
         repeatPasswordErrors,
+        serverSignInErrors,
+        serverSignInErrorCodes,
     }
 }

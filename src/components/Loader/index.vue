@@ -1,24 +1,13 @@
 <script lang="ts" setup>
-import { computed, toRefs, watch } from "vue";
+import { computed, watch } from "vue";
+import { useLoader } from "@/composition/loader";
+import { AnimationEndResult } from "@/types/Loader";
 
-const props = defineProps({
-    isLoading: {
-        type: Boolean,
-        default: true,
-    },
-    isSuccess: {
-        type: Boolean,
-        default: false,
-    },
-    isFail: {
-        type: Boolean,
-        default: false,
-    }
-});
+const emit = defineEmits<{
+    (e: "animation-end", result: AnimationEndResult): void
+}>();
 
-const emit = defineEmits(["animation-end"]);
-
-const { isLoading, isSuccess, isFail } = toRefs(props);
+const { isLoading, isSuccess, isFail, showLoaderScreen, resetFlags } = useLoader();
 
 const RESULT_ANIMATION_NAME = "show-result";
 const RESULT_ANIMATION_DUR = 1000;
@@ -66,36 +55,43 @@ const failTextAnimationName = computed(() => {
 // to give user time to understand what did happen I add 500ms
 const timeToCompleteAnimation = RESULT_ANIMATION_DUR + DURATION_TO_HIDE_OBJ + 500;
 function emitAnimationEnd() {
-    const result = {
+    const result: AnimationEndResult = {
         isSuccess: isSuccess.value,
         isFail: isFail.value,
     };
 
-    emit("animation-end", result);
+    resetFlags();
+    emit("animation-end", result)
 }
 
-watch([isSuccess, isFail], ([newSuccess, newFail], [oldSuccess, oldFail]) => {
-    if (newSuccess !== oldSuccess || newFail !== oldFail) {
+watch([isSuccess, isFail], ([newSuccess, newFail]) => {
+    if (newSuccess || newFail) {
         setTimeout(emitAnimationEnd, timeToCompleteAnimation);
     }
 });
 </script>
 
 <template>
-    <div class="loader">
-        <div class="loader__circle  loader__circle--white"></div>
-        <div class="loader__circle  loader__circle--transparent"></div>
+    <transition name="loader-component">
+        <div
+            v-if="showLoaderScreen"
+            class="loader"
+        >
+            <div class="loader__circle  loader__circle--white"></div>
 
-        <h3 class="loader__text loader__text--success">
-            Success!
-        </h3>
+            <div class="loader__circle  loader__circle--transparent"></div>
 
-        <h3 class="loader__text loader__text--fail">
-            Fail :(
-        </h3>
+            <h3 class="loader__text loader__text--success">
+                Success!
+            </h3>
 
-        <div class="loader__stash"></div>
-    </div>
+            <h3 class="loader__text loader__text--fail">
+                Fail :(
+            </h3>
+
+            <div class="loader__stash"></div>
+        </div>
+    </transition>
 </template>
 
 <style lang="scss">

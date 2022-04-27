@@ -1,11 +1,31 @@
 <script lang="ts" setup>
 import VInput from "@/components/VInput/index.vue"
 import VButton from "@/components/VButton/index.vue"
+import Loader from "@/components/Loader/index.vue";
 
-import { computed } from "vue";
-import useAuth from "@/composition/auth";
+import { AnimationEndResult } from "@/types/Loader";
 import routesNames from "@/router/routesNames";
+import { computed } from "vue";
 import { useValidation } from "@/composition/validation";
+import { useLoader } from "@/composition/loader";
+import { useUserStore } from "@/store/user";
+import { useRouter } from "vue-router";
+
+const {
+    startLoading,
+    successfulFinishLoading,
+    failedFinishLoading,
+} = useLoader();
+
+const router = useRouter();
+
+const userStore = useUserStore();
+
+function actionSubscriber(obj: any) {
+    console.log("actionSubscriber", obj);
+}
+
+userStore.$onAction(actionSubscriber);
 
 const {
     email,
@@ -16,8 +36,6 @@ const {
     repeatPasswordErrors,
 } = useValidation();
 
-const { registerUser } = useAuth();
-
 const isValidForm = computed(() => {
     return emailErrors.value.length === 0 &&
         passwordErrors.value.length === 0 &&
@@ -25,18 +43,33 @@ const isValidForm = computed(() => {
 });
 
 function onSubmit(e: Event) {
-    if (!isValidForm) {
+    if (!isValidForm.value) {
         return;
     }
 
-    console.log("aaaaaa", e)
-    // registerUser(email.value, password.value);
+    startLoading();
+
+    userStore.signUp(email.value, password.value)
+        .then(() => {
+            successfulFinishLoading();
+        })
+        .catch(() => {
+            failedFinishLoading();
+        });
+}
+
+function onAnimationEnd(result: AnimationEndResult) {
+    if (result.isSuccess) {
+        router.push({ name: routesNames.gallery });
+    }
 }
 
 </script>
 
 <template>
     <div class="auth-box">
+        <Loader @animation-end="onAnimationEnd" />
+
         <h2 class="auth-box__headline">
             Sign up
         </h2>
