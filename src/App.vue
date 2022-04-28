@@ -33,7 +33,12 @@ const logoProps = defineLogoProps({});
         </div>
 
         <div class="app__content">
-            <router-view />
+
+            <router-view v-slot="{ Component }">
+                <Transition name="translate" mode="out-in">
+                    <component :is="Component" />
+                </Transition>
+            </router-view>
 
             <router-view
                 :key="$route.fullPath"
@@ -84,5 +89,4 @@ const logoProps = defineLogoProps({});
         border-top: .5px solid $input-border--focus;
     }
 }
-
 </style>

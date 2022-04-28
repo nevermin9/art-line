@@ -10,11 +10,11 @@ const emit = defineEmits<{
 const { isLoading, isSuccess, isFail, showLoaderScreen, resetFlags } = useLoader();
 
 const RESULT_ANIMATION_NAME = "show-result";
-const RESULT_ANIMATION_DUR = 1000;
+const RESULT_ANIMATION_DUR = 500;
 const ROTATE_ANIMATION_NAME = "rotate";
 const Y_POINT_IN_STASH = "90%";
 const Y_POINT_IN_MIDDLE = "-50%";
-const DURATION_TO_HIDE_OBJ = 300;
+const DURATION_TO_HIDE_OBJ = 500;
 
 const textY = Y_POINT_IN_STASH;
 const textAnimationDuration = RESULT_ANIMATION_DUR / 1000 + "s";
@@ -198,14 +198,6 @@ $circle-diameter: 50px;
 @keyframes show-result {
     0% {
         transform: translate(-50%, 90%);
-    }
-
-    50% {
-        transform: translate(-50%, 35%);
-    }
-
-    65% {
-        transform: translate(-50%, 35%);
     }
 
     100% {

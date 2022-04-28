@@ -32,3 +32,17 @@
         transform: scaleY(1);
     }
 }
+
+// translate
+.translate-enter-active,
+.translate-leave-active {
+    transition: all 0.5s ease;
+}
+
+
+.translate-enter-from,
+.translate-leave-to {
+    opacity: 0;
+    transform: translateY(-50%);
+    // transform: scale(0.9);
+}
