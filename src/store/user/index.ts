@@ -8,6 +8,8 @@ import {
 import { auth } from "@/firebase";
 
 export const useUserStore = defineStore("user", {
+    persist: true,
+
     state: () => ({
         userData: null,
     } as UserStore),
