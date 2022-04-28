@@ -80,6 +80,18 @@ const logoProps = defineLogoProps({});
         margin-bottom: 32px;
     }
 
+    &__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 8px 16px;
+
+        @include media("L") {
+            padding: 16px 32px;
+        }
+    }
+
     &__aside {
         display: flex;
         justify-content: center;
