@@ -2,23 +2,21 @@
 import TheCurtain from "@/components/TheCurtain/index.vue";
 import TheLogo from "@/components/TheLogo/index.vue";
 import VLink from "@/components/VLink/index.vue";
-import { useDevice } from "./composition/device";
+import { onMounted, ref } from "vue";
+import { useDevice } from "@/composition/device";
 
 
 const { isMobile } = useDevice();
-function defineLogoProps(obj: Record<string, string | boolean>) {
-    if (!isMobile.value) {
-        obj = {
-            "width": "450px",
-            "height": "150px",
-            "with-animation": true,
-        };
+const isScrolled = ref(false);
+
+onMounted(() => {
+    function scrollListener() {
+        isScrolled.value = true;
+        window.removeEventListener("scroll", scrollListener);
     }
 
-    return obj;
-}
-// should be reactive to react on scroll
-const logoProps = defineLogoProps({});
+    window.addEventListener("scroll", scrollListener);
+});
 
 </script>
 
@@ -26,11 +24,18 @@ const logoProps = defineLogoProps({});
     <section class="app">
         <TheCurtain />
 
-        <div class="app__logo">
-            <TheLogo
-                v-bind="logoProps"
-            />
-        </div>
+        <header class="app__header"
+            :class="{ 'app__header--small': isScrolled }"
+        >
+            <div class="app__logo-box">
+                <TheLogo
+                    class="app__logo"
+                    width="170px"
+                    height="70px"
+                    :with-animation="!isMobile"
+                />
+            </div>
+        </header>
 
         <div class="app__content">
 
@@ -70,14 +75,47 @@ const logoProps = defineLogoProps({});
 }
 
 .app {
+    $root: &;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: inherit;
 
-    &__logo {
-        padding-top: 75px;
+    &__header {
+        position: sticky;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 225px;
         margin-bottom: 32px;
+        background-color: $second-color;
+        transition: height $animation-duration;
+
+        &#{ $root }__header--small {
+            height: 102px;
+
+            #{ $root }__logo {
+                transform: scale(1);
+            }
+        }
+    }
+
+    &__logo-box {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        transition: transform $animation-duration;
+    }
+
+    &__logo {
+        transform: scale(1.5);
+        transition: transform $animation-duration;
+
+        @include media("L") {
+            transform: scale(2.3);
+        }
     }
 
     &__content {

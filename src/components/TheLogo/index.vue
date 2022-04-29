@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive, onMounted, toRefs, PropType } from "vue";
+import { ref, reactive, onMounted, toRefs } from "vue";
 import { useDevice } from "@/composition/device";
 
 const props = defineProps({
@@ -137,6 +137,7 @@ onMounted(() => {
 .logo {
     width: v-bind(width);
     height: v-bind(height);
+    filter: drop-shadow(2px 4px 2px black);
 
     &__svg-box {
         width: 100%;
