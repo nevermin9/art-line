@@ -7,6 +7,8 @@
             home
         </router-link>
 
+        <!-- DENSE, squares of different sizes, with gaps, overlay for short description -->
+
         <article class="gallery__grid-box">
             <div></div>
             <div></div>
