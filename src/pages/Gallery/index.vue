@@ -1,3 +1,14 @@
+<script lang="ts" setup>
+import { onMounted, reactive } from "vue";
+import api from "@/api";
+
+const data = reactive({ fetched: {} });
+
+onMounted(async () => {
+    data.fetched = await api.artworks.getArtworksList();
+});
+</script>
+
 <template>
     <section class="gallery" >
         <h1>
@@ -10,7 +21,9 @@
         <!-- DENSE, squares of different sizes, with gaps, overlay for short description -->
 
         <article class="gallery__grid-box">
-            <div></div>
+            <div>
+                {{ data.fetched }}
+            </div>
             <div></div>
             <div></div>
             <div></div>
