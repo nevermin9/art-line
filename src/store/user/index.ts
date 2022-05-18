@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { UserStore } from "@/types/User";
+import { IUserStore } from "@/types/User";
 import { isObject } from "@/helpers";
 import {
     createUserWithEmailAndPassword,
@@ -12,7 +12,7 @@ export const useUserStore = defineStore("user", {
 
     state: () => ({
         userData: null,
-    } as UserStore),
+    } as IUserStore),
 
     getters: {
         isLogged: (state) => isObject(state.userData),

@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
 
-export interface UserStore {
+export interface IUserStore {
     userData: User | null;
 }
