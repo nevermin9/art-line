@@ -4,6 +4,7 @@ import TheLogo from "@/components/TheLogo/index.vue";
 import VLink from "@/components/VLink/index.vue";
 import { onMounted, ref } from "vue";
 import { useDevice } from "@/composition/device";
+import routesNames from "@/router/routesNames";
 
 
 const { isMobile } = useDevice();
@@ -37,7 +38,7 @@ onMounted(() => {
             </div>
         </header>
 
-        <div class="app__content">
+        <main class="app__content">
 
             <router-view v-slot="{ Component }">
                 <Transition name="translate" mode="out-in">
@@ -54,15 +55,25 @@ onMounted(() => {
                     <component :is="Component" />
                 </Transition>
             </router-view>
-        </div>
+        </main>
 
         <aside class="app__aside">
             <VLink
-                :path="{ name: 'Home' }"
+                v-show="$route.name !== routesNames.author"
+                :path="{ name: routesNames.author }"
                 bold
                 letter-spacing="2px"
             >
                 about the author
+            </VLink>
+
+            <VLink
+                v-show="$route.name === routesNames.author"
+                :path="{ name: routesNames.home }"
+                bold
+                letter-spacing="2px"
+            >
+                back
             </VLink>
         </aside>
     </section>

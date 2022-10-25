@@ -3,9 +3,10 @@ import routesNames from "./routesNames";
 import { registerGlobalHooks } from "./guards/global";
 import { setDefaultViewComponent } from "./guards/per-route";
 
-const Home = () => import("@/pages/Home/index.vue");
-const ModalRoute = () => import("@/pages/ModalRoute/index.vue");
-const Gallery = () => import("@/pages/Gallery/index.vue");
+const Home = () => import("@/pages/Home/Home.vue");
+const ModalRoute = () => import("@/pages/ModalRoute/ModalRoute.vue");
+const Gallery = () => import("@/pages/Gallery/Gallery.vue");
+const Author = () => import("@/pages/Author/Author.vue");
 
 const routes: RouteRecordRaw[] = [
     {
@@ -13,6 +14,7 @@ const routes: RouteRecordRaw[] = [
         name: routesNames.home,
         component: Home,
     },
+
     {
         path: "/sign-in",
         name: routesNames.signIn,
@@ -31,6 +33,7 @@ const routes: RouteRecordRaw[] = [
         },
         beforeEnter: setDefaultViewComponent,
     },
+
     {
         path: "/sign-up",
         name: routesNames.signUp,
@@ -49,6 +52,7 @@ const routes: RouteRecordRaw[] = [
         },
         beforeEnter: setDefaultViewComponent,
     },
+
     {
         path: "/gallery",
         name: routesNames.gallery,
@@ -56,6 +60,12 @@ const routes: RouteRecordRaw[] = [
         meta: {
             forLogged: true,
         }
+    },
+
+    {
+        path: "/author",
+        name: routesNames.author,
+        component: Author,
     },
 ];
 
