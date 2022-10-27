@@ -111,6 +111,7 @@ function isShownPassword(inputType: string) {
             </label>
 
             <button
+                tabindex="-1"
                 v-if="isPasswordInput"
                 class="v-input__show-pass-btn"
                 type="button"

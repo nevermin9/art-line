@@ -1,12 +1,49 @@
 <script lang="ts" setup>
-import { onMounted, reactive } from "vue";
-import api from "@/api";
+import { computed, onMounted, reactive, ref, Ref } from "vue";
 
-const data = reactive({ fetched: {} });
+const COUNT = 5;
+const room = ref<HTMLElement | null>(null);
+const roomWidth = ref<number>(0);
+const dashOffset = ref<number>(0)
+const lines = ref<[] | []>([]);
+const linesByIndex = reactive(new Map())
+const linee = ref<HTMLElement[]>([]);
+const createGroupsByIndex = (_lines: Ref<[]>) => {
+    for (let i = 0; i < COUNT; i++) {
+        const i3 = i * 3;
+        linesByIndex.set(i, [
+            // left, middle, right
+            lines.value[i3 + 0],
+            lines.value[i3 + 1],
+            lines.value[i3 + 2],
+        ]);
+    }
+}
 
-onMounted(async () => {
-    data.fetched = await api.artworks.getArtworksList();
-});
+const animate = (t?: number) => {
+    // const current = parseInt(linee.value[0].getAttribute("stroke-dashoffset") || "", 10);
+    dashOffset.value -= 1;
+    if (dashOffset.value == null || dashOffset.value <= 0) {
+        return;
+    }
+    requestAnimationFrame(animate);
+}
+
+const clickHandler = (i: number) => {
+    // console.dir();
+    // const
+    animate();
+}
+
+// const 
+onMounted(() => {
+    createGroupsByIndex(lines);
+    roomWidth.value = dashOffset.value = room.value!.getBoundingClientRect().width;
+})
+
+
+
+
 </script>
 
 <template>
@@ -18,21 +55,53 @@ onMounted(async () => {
             home
         </router-link>
 
-        <!-- DENSE, squares of different sizes, with gaps, overlay for short description -->
+        <article
+            ref="room"
+            class="gallery__room"
+        >
+            <div
+                v-for="i in COUNT"
+                class="gallery__artwork-box"
+            >
+                <!-- <img
+                    class="gallery__artwork-img"
+                    :key="pic.id"
+                    :src="getImageLink(pic.image_id)"
+                    :alt="pic.title"
+                > -->
+                <!-- <template v-if="index === 0"> -->
+                    <div class="gallery__test">
+                        <div
+                            class="gallery__test-inner"
+                            @click="() => clickHandler(i-1)"
+                        />
+                    </div>
 
-        <article class="gallery__grid-box">
-            <div>
-                {{ data.fetched }}
+                <!-- </template> -->
             </div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
         </article>
+
+        <div class="gallery__line-box" :style="`width: ${roomWidth}px`">
+                <!-- viewBox="0 0 250 175" -->
+            <svg
+                id="svg-box"
+                :viewBox="`0 0 ${roomWidth} 50`"
+            >
+                    <!-- ref="lines" -->
+                <line
+                    ref="linee"
+                    stroke="#fff"
+                    :stroke-dasharray="roomWidth"
+                    :stroke-dashoffset="dashOffset"
+                    stroke-width="2"
+                    x1="0"
+                    y1="25"
+                    :x2="roomWidth"
+                    y2="25"
+                />
+            </svg>
+
+        </div>
     </section>
 </template>
 
@@ -40,20 +109,94 @@ onMounted(async () => {
 .gallery {
     flex: 1;
 
-    &__grid-box {
-        display: grid;
-        grid-template-rows: repeat(3, 300px);
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-        max-width: 700px;
+    &__room {
+        display: flex;
+        justify-content: center;
         width: 100%;
         height: 100%;
+    }
 
-        & > div {
-            width: 100%;
-            height: 100%;
-            background-color: khaki;
+    &__artwork-box {
+        flex-basis: 250px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        height: 375px;
+        border: 1px solid #fff;
+    }
+
+    &__test {
+        width: 100%;
+        height: 200px;
+        padding: 20px;
+
+    }
+
+    &__test-inner {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        transition: transform .3s;
+        background-color: #56fc99;
+
+        &:hover {
+            transform: scale(1.1);
         }
+
+    }
+
+    &__line-box {
+        height: 100px;
+    }
+
+    & #svg-box {
+        height: 100%;
+        width: 100%;
+        background-color: grey;
+    }
+
+    &__artwork-img {
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
+
+#svg-box {
+    $dur: 0.5s;
+
+    @mixin line-animation {
+        animation-name: line-animation;
+        animation-duration: $dur;
+        animation-fill-mode: forwards;
+    }
+
+    .line-start {
+        @include line-animation();
+        animation-delay: $dur;
+    }
+
+    .line-end {
+        @include line-animation();
+    }
+
+    .line-animation {
+        animation-delay: 2s;
+    }
+
+    @keyframes line-animation {
+        0% {
+            stroke-dashoffset: 125;
+        }
+
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
+}
+
 </style>

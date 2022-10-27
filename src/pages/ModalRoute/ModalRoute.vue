@@ -20,7 +20,8 @@ function closeModalRoute(e: Event) {
 }
 
 const Component = defineAsyncComponent(() => {
-    return import(`./children/${props.componentName.replace(/\s+/g, '')}/index.vue`)
+    const name = props.componentName.replace(/\s+/g, '');
+    return import(`./children/${name}/${name}.vue`)
 });
 </script>
 

@@ -3,10 +3,10 @@ import routesNames from "./routesNames";
 import { registerGlobalHooks } from "./guards/global";
 import { setDefaultViewComponent } from "./guards/per-route";
 
-const Home = () => import("@/pages/Home/Home.vue");
-const ModalRoute = () => import("@/pages/ModalRoute/ModalRoute.vue");
-const Gallery = () => import("@/pages/Gallery/Gallery.vue");
-const Author = () => import("@/pages/Author/Author.vue");
+const Home = () => import(/* webpackChunkName: "home" */ "@/pages/Home/Home.vue");
+const ModalRoute = () => import(/* webpackChunkName: "modal-route" */ "@/pages/ModalRoute/ModalRoute.vue");
+const Gallery = () => import(/* webpackChunkName: "gallery" */ "@/pages/Gallery/Gallery.vue");
+const Author = () => import(/* webpackChunkName: "author" */ "@/pages/Author/Author.vue");
 
 const routes: RouteRecordRaw[] = [
     {

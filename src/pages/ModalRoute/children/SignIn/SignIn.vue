@@ -31,6 +31,8 @@ const {
 const email = ref("");
 const password = ref("");
 
+function clearErrors() {}
+
 const isFormFilled = computed(() => {
     return email.value.length > 0 && password.value.length > 0;
 })

@@ -5,7 +5,9 @@ import VLink from "@/components/VLink/index.vue";
 import { onMounted, ref } from "vue";
 import { useDevice } from "@/composition/device";
 import routesNames from "@/router/routesNames";
+import { useQueryProvider } from "vue-query";
 
+useQueryProvider();
 
 const { isMobile } = useDevice();
 const isScrolled = ref(false);
@@ -23,7 +25,7 @@ onMounted(() => {
 
 <template>
     <section class="app">
-        <TheCurtain />
+        <!-- <TheCurtain /> -->
 
         <header class="app__header"
             :class="{ 'app__header--small': isScrolled }"
